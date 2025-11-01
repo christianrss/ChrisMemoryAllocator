@@ -1,21 +1,21 @@
-flags=-02 -Wall -std=c2x
-ldflags=-lbu
+CFLAGS=-O2 -Wall -std=c2x
+LDFLAGS=-lbu
 
-.PHONY: clean
+.PHONY: all clean
 
 bin:
 	mkdir -p bin
 
-all: clean alloc
+all: clean bin/alloc
 
 bin/alloc: bin/alloc.o bin/heap.o | bin
-	cc $(flags) $^ -o $@ $(ldflags)
+	cc $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 bin/alloc.o: alloc.c alloc.h | bin
-	cc $(flags) -c $<
+	cc $(CFLAGS) -c $< -o $@
 
 bin/heap.o: heap.asm | bin
-	nasm -f elf $^ -o $@
+	nasm -f elf $< -o $@
 
 clean:
-	rm -f bin/*.o alloc
+	rm -f ./bin/*.o ./bin/alloc
