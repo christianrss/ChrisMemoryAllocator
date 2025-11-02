@@ -16,8 +16,8 @@ typedef unsigned char int8;
 typedef unsigned short int int16;
 typedef unsigned int int32;
 typedef unsigned long long int64;
-//typedef unsigned _BitInt(128) int128;
-typedef unsigned __int128 int128;
+typedef unsigned _BitInt(128) int128;
+//typedef unsigned __int128 int128;
 typedef void heap;
 typedef int32 word;
 
