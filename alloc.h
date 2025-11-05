@@ -42,8 +42,14 @@ typedef struct packed s_header header;
 #define $v (void *)
 #define $h (header *)
 
-#define reterr(x) errno = (x); return $v 0
+#define reterr(x) do {\
+    errno = (x); \
+    return $v 0; \
+} while(false)
 
+#define findblock(x) findblock_((header *)memspace,(x),0)
+
+header *findblock_(header*,word);
 void *mkalloc(word,header*);
 void *alloc(int32);
 int main(int, char**);

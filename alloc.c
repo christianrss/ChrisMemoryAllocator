@@ -3,15 +3,23 @@
 
 extern heap *memspace;
 
+header *findblock(header *hdr, word allocation, word n) {
+    if (n > maxwords)
+        reterr(ErrNoMem);
+
+    (!(hdr->w)) ? ({
+        
+    })
+}
+
 void *mkalloc(word words, header *hdr) {
     void *ret, *bytesin;
     word wordsin;
 
     bytesin = ($v (($v hdr) - memspace));
     wordsin = (((word)bytesin)/4)+1;
-    if (words > (Maxwords-wordsin)) {
+    if (words > (Maxwords-wordsin))
         reterr(ErrNoMem);
-    }
      
     hdr->w = words;
     hdr->alloced = true;
@@ -33,9 +41,8 @@ void *alloc(int32 bytes) {
     hdr = $h mem;
 
     (!(hdr->w)) ? ({
-        if (words > Maxwords) {
+        if (words > Maxwords)
             reterr(ErrNoMem);
-        }
 
         mem = mkalloc(words, hdr);
         if(!mem)
