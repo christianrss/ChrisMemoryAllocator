@@ -9,8 +9,9 @@ void *mkalloc(word words, header *hdr) {
 
     bytesin = ($v (($v hdr) - memspace));
     wordsin = (((word)bytesin)/4)+1;
-    if (words > (Maxwords-wordsin))
+    if (words > (Maxwords-wordsin)) {
         reterr(ErrNoMem);
+    }
      
     hdr->w = words;
     hdr->alloced = true;
@@ -31,11 +32,10 @@ void *alloc(int32 bytes) {
     mem = $v memspace;
     hdr = $h mem;
 
-    hdr->w = 1;
-
     (!(hdr->w)) ? ({
-        if (words > Maxwords)
+        if (words > Maxwords) {
             reterr(ErrNoMem);
+        }
 
         mem = mkalloc(words, hdr);
         if(!mem)
