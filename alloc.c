@@ -19,7 +19,7 @@ header *findblock_(header *hdr, word allocation, word n) {
     if (ok)
         return hdr;
     else {
-        mem = $v hdr + hdr->w;
+        mem = $v hdr + (hdr->w*4) + 4;
         hdr_ = $h mem;
         n_ = n + hdr->w;
 
@@ -54,41 +54,35 @@ void *alloc(int32 bytes) {
             bytes/4 :
         (bytes/4) + 1;
     
-    mem = $v memspace;
-    hdr = $h mem;
+    hdr = findblock(words);
+    if (!hdr)
+        return $v 0;
 
-    (!(hdr->w)) ? ({
-        if (words > Maxwords)
-            reterr(ErrNoMem);
+    if (words > Maxwords)
+        reterr(ErrNoMem);
 
-        mem = mkalloc(words, hdr);
-        if(!mem)
-            return $v 0;
+    mem = mkalloc(words, hdr);
+    if(!mem)
+        return $v 0;
 
-        return mem;
-    })
-    : ({
-        (void)0;
-    });
-
-    return $v 0;
+    return mem;
 }
 
 int main(int argc, char *argv[]) {
-    header *hdr;
     int8 *p;
-
-    p = alloc(7);
-    printf("Allocated 0x%x\n", $i p);
-
-    hdr = findblock(500);
-    if (!hdr) {
-        printf("Error %d\n", errno);
-        return -1;
-    }
+    int8 *p2;
+    int8 *p3;
 
     printf("Memspace = 0x%x\n", $i memspace);
-    printf("Block = 0x%x\n", $i hdr);
+
+    p = alloc(7);
+    printf("Alloc1 0x%x\n", $i p);
+
+    p2 = alloc(2000);
+    printf("Alloc2 0x%x\n", $i p2);
+
+    p3 = alloc(1);
+    printf("Alloc3 0x%x\n", $i p3);
 
     return 0;
 }
