@@ -68,6 +68,17 @@ void *alloc(int32 bytes) {
     return mem;
 }
 
+void show_(header *hdr) {
+    header *p;
+    void *mem;
+    int32 n;
+    
+    for (n=1, p=hdr; p->w; mem=$v p + (p->w+1)*4, p=mem, n++)
+        printf("Alloc %d = %d %s words\n", n, p->w, (p->alloced) ? "alloced" : "free");
+
+    return;
+}
+
 int main(int argc, char *argv[]) {
     int8 *p;
     int8 *p2;
@@ -76,13 +87,9 @@ int main(int argc, char *argv[]) {
     printf("Memspace = 0x%x\n", $i memspace);
 
     p = alloc(7);
-    printf("Alloc1 0x%x\n", $i p);
-
     p2 = alloc(2000);
-    printf("Alloc2 0x%x\n", $i p2);
-
     p3 = alloc(1);
-    printf("Alloc3 0x%x\n", $i p3);
+    show();
 
     return 0;
 }
